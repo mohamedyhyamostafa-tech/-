@@ -1,5 +1,3 @@
-const http = require("http");
-
 const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -155,9 +153,7 @@ function startGame(){
 </html>
 `;
 
-http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
+module.exports = (req, res) => {
+  res.setHeader("Content-Type", "text/html");
   res.end(html);
-}).listen(3000, () => {
-  console.log("✅ Snake Game running at: http://localhost:3000");
-});
+};
