@@ -2,10 +2,146 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>⚔️ الزعيم ⚔️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚔️ الزعيم - لعبة الثعبان الذكية 🐍</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #0a0a0a, #000);
+  font-family: 'Courier New', monospace;
+  color: #00ff88;
+  text-align: center;
+  user-select: none;
+}
+h1 {
+  text-shadow: 0 0 15px #00ff88;
+  margin-top: 15px;
+}
+canvas {
+  background: #000;
+  display: block;
+  margin: 20px auto;
+  border: 3px solid #00ff88;
+  border-radius: 15px;
+}
+button {
+  background: #00ff88;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+button:hover {
+  background: #0f0;
+  transform: scale(1.1);
+}
+#score {
+  margin: 10px;
+  font-size: 20px;
+}
+footer {
+  margin-top: 20px;
+  color: #888;
+  font-size: 14px;
+}
+</style>
 </head>
-<body style="background:#000;color:#0f0;text-align:center;font-family:monospace;">
-<h2>مرحباً بك في لعبة الزعيم 🐍</h2>
-<a href="/api/game" style="color:#0f0;font-size:20px;">ابدأ اللعبة الآن</a>
+<body>
+  <h1>⚔️ الزعيم 🐍</h1>
+  <canvas id="game" width="400" height="400"></canvas>
+  <div>
+    <button onclick="startGame()">ابدأ</button>
+    <button onclick="pauseGame()">توقف</button>
+    <button onclick="speedUp()">سرّع</button>
+    <button onclick="slowDown()">أبطئ</button>
+  </div>
+  <div id="score">النتيجة: 0</div>
+  <footer>برمجة الزعيم © 2025</footer>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+let snake = [{x:10,y:10}];
+let food = {x:5,y:5};
+let dx=1, dy=0;
+let score=0;
+let speed=150;
+let running=false;
+let loop;
+
+function draw() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,400,400);
+
+  ctx.fillStyle = "#00ff88";
+  snake.forEach(p => ctx.fillRect(p.x*20, p.y*20, 18, 18));
+
+  ctx.fillStyle = "red";
+  ctx.fillRect(food.x*20, food.y*20, 18, 18);
+
+  document.getElementById("score").innerText = "النتيجة: " + score;
+}
+
+function move() {
+  const head = {x:snake[0].x+dx, y:snake[0].y+dy};
+  snake.unshift(head);
+
+  if (head.x===food.x && head.y===food.y) {
+    score++;
+    food={x:Math.floor(Math.random()*20), y:Math.floor(Math.random()*20)};
+  } else {
+    snake.pop();
+  }
+
+  if (head.x<0 || head.x>19 || head.y<0 || head.y>19 ||
+      snake.slice(1).some(p=>p.x===head.x && p.y===head.y)) {
+    clearInterval(loop);
+    running=false;
+    alert("💀 انتهت اللعبة! النتيجة: "+score);
+    resetGame();
+  }
+
+  draw();
+}
+
+function startGame() {
+  if (!running) {
+    running=true;
+    loop=setInterval(move,speed);
+  }
+}
+function pauseGame() {
+  running=false;
+  clearInterval(loop);
+}
+function speedUp() {
+  if (speed>50) speed-=20;
+  if (running) {clearInterval(loop); loop=setInterval(move,speed);}
+}
+function slowDown() {
+  speed+=30;
+  if (running) {clearInterval(loop); loop=setInterval(move,speed);}
+}
+function resetGame() {
+  snake=[{x:10,y:10}];
+  food={x:5,y:5};
+  dx=1; dy=0;
+  score=0;
+  speed=150;
+  draw();
+}
+
+document.addEventListener("keydown",e=>{
+  if (e.key==="ArrowUp" && dy===0){dx=0;dy=-1;}
+  if (e.key==="ArrowDown" && dy===0){dx=0;dy=1;}
+  if (e.key==="ArrowLeft" && dx===0){dx=-1;dy=0;}
+  if (e.key==="ArrowRight" && dx===0){dx=1;dy=0;}
+});
+draw();
+</script>
 </body>
 </html>
