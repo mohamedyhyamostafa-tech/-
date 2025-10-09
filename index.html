@@ -7,25 +7,26 @@
 <style>
 body {
   margin: 0;
-  background: radial-gradient(circle at center, #0a0a0a, #000);
-  font-family: 'Courier New', monospace;
-  color: #00ff88;
+  background: radial-gradient(circle at center, #000, #0a0a0a);
+  font-family: 'Cairo', sans-serif;
+  color: #00ff99;
   text-align: center;
   user-select: none;
 }
 h1 {
-  text-shadow: 0 0 15px #00ff88;
+  text-shadow: 0 0 15px #00ff99;
   margin-top: 15px;
 }
 canvas {
-  background: #000;
+  background: #111;
   display: block;
-  margin: 20px auto;
-  border: 3px solid #00ff88;
-  border-radius: 15px;
+  margin: 15px auto;
+  border: 3px solid #00ff99;
+  border-radius: 12px;
+  box-shadow: 0 0 25px #00ff99aa;
 }
 button {
-  background: #00ff88;
+  background: #00ff99;
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -37,15 +38,31 @@ button {
 }
 button:hover {
   background: #0f0;
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+.arrow {
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
 }
 #score {
   margin: 10px;
-  font-size: 20px;
+  font-size: 22px;
+  text-shadow: 0 0 10px #00ff99;
 }
 footer {
-  margin-top: 20px;
-  color: #888;
+  margin-top: 15px;
+  color: #666;
   font-size: 14px;
 }
 </style>
@@ -53,18 +70,31 @@ footer {
 <body>
   <h1>⚔️ الزعيم 🐍</h1>
   <canvas id="game" width="400" height="400"></canvas>
+
   <div>
-    <button onclick="startGame()">ابدأ</button>
-    <button onclick="pauseGame()">توقف</button>
-    <button onclick="speedUp()">سرّع</button>
-    <button onclick="slowDown()">أبطئ</button>
+    <button onclick="startGame()">▶️ ابدأ</button>
+    <button onclick="pauseGame()">⏸️ توقف</button>
+    <button onclick="speedUp()">⚡ سرّع</button>
+    <button onclick="slowDown()">🐢 أبطئ</button>
   </div>
+
+  <div class="controls">
+    <div class="row"><button class="arrow" onclick="setDir('up')">⬆️</button></div>
+    <div class="row">
+      <button class="arrow" onclick="setDir('left')">⬅️</button>
+      <button class="arrow" onclick="setDir('down')">⬇️</button>
+      <button class="arrow" onclick="setDir('right')">➡️</button>
+    </div>
+  </div>
+
   <div id="score">النتيجة: 0</div>
-  <footer>برمجة الزعيم © 2025</footer>
+
+  <footer>⚔️ برمجة الزعيم © 2025</footer>
 
 <script>
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+
 let snake = [{x:10,y:10}];
 let food = {x:5,y:5};
 let dx=1, dy=0;
@@ -77,7 +107,7 @@ function draw() {
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,400,400);
 
-  ctx.fillStyle = "#00ff88";
+  ctx.fillStyle = "#00ff99";
   snake.forEach(p => ctx.fillRect(p.x*20, p.y*20, 18, 18));
 
   ctx.fillStyle = "red";
@@ -135,12 +165,20 @@ function resetGame() {
   draw();
 }
 
+function setDir(dir){
+  if(dir==="up" && dy===0){dx=0;dy=-1;}
+  if(dir==="down" && dy===0){dx=0;dy=1;}
+  if(dir==="left" && dx===0){dx=-1;dy=0;}
+  if(dir==="right" && dx===0){dx=1;dy=0;}
+}
+
 document.addEventListener("keydown",e=>{
-  if (e.key==="ArrowUp" && dy===0){dx=0;dy=-1;}
-  if (e.key==="ArrowDown" && dy===0){dx=0;dy=1;}
-  if (e.key==="ArrowLeft" && dx===0){dx=-1;dy=0;}
-  if (e.key==="ArrowRight" && dx===0){dx=1;dy=0;}
+  if (e.key==="ArrowUp") setDir("up");
+  if (e.key==="ArrowDown") setDir("down");
+  if (e.key==="ArrowLeft") setDir("left");
+  if (e.key==="ArrowRight") setDir("right");
 });
+
 draw();
 </script>
 </body>
