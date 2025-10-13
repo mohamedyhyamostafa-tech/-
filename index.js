@@ -1,103 +1,65 @@
 export default function Home() {
-  function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("active");
-  }
-
-  function searchPage() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const links = document.querySelectorAll(".links a");
-    for (let link of links) {
-      if (link.innerText.toLowerCase().includes(input)) {
-        window.location.href = link.href;
-        return;
-      }
-    }
-    alert("Page not found!");
-  }
-
-  function playWelcome() {
-    const music = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-    music.volume = 0.2;
-    music.play();
-
-    setTimeout(() => {
-      const msg = new SpeechSynthesisUtterance("Welcome to Alzaeem Tech website!");
-      msg.lang = "en-US";
-      msg.rate = 1.2;
-      msg.pitch = 1.1;
-      window.speechSynthesis.speak(msg);
-    }, 3000);
-  }
-
-  if (typeof window !== "undefined") {
-    window.onload = () => playWelcome();
-  }
-
   return (
-    <div style={{ margin: 0, fontFamily: "'Segoe UI', sans-serif", background: "linear-gradient(135deg,#0d0d0d,#1a1a1a,#262626)", color: "white", overflowX: "hidden" }}>
-      <button
-        onClick={toggleSidebar}
-        style={{ position: "fixed", top: 20, right: 20, background: "gold", color: "black", border: "none", padding: "10px 15px", cursor: "pointer", borderRadius: 8, fontWeight: "bold", zIndex: 1002 }}
-      >
-        ☰ Menu
-      </button>
+    <div>
+      <style jsx>{`
+        :root{--bg:#0b1d40;--panel:#081028;--accent:#ffd700;--text:#e9f2ff;}
+        body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(180deg,#07102a,#0b1d40);color:var(--text);display:flex;align-items:center;justify-content:center}
+        .calc{width:360px;max-width:92vw;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.08));border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+        .screen{background:var(--panel);border-radius:10px;padding:14px;text-align:right;font-size:32px;min-height:56px;color:var(--text);box-shadow:inset 0 -6px 18px rgba(0,0,0,0.6)}
+        .small{font-size:14px;color:#9fb3d9}
+        .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+        button{padding:16px;border-radius:10px;border:0;background:#0f1b36;color:var(--text);font-size:18px;cursor:pointer;box-shadow:0 6px 12px rgba(0,0,0,0.4)}
+        button.op{background:linear-gradient(180deg,#ffd700,#ffb200);color:#111;font-weight:700}
+        button.keywide{grid-column:span 2}
+        button:active{transform:translateY(2px);box-shadow:0 4px 8px rgba(0,0,0,0.4)}
+        footer{margin-top:12px;text-align:center;color:#9fb3d9;font-size:13px}
+      `}</style>
 
-      <header style={{ textAlign: "center", padding: 20, fontSize: 40, fontWeight: "bold", color: "gold", textShadow: "0 0 15px #ff0,0 0 25px #f80" }}>
-        ⚔️ 𝒜𝓁𝓏𝒶𝒾𝓂 𝒯𝑒𝒸𝒽 ⚔️ <i className="fa-solid fa-brain" style={{ color: "#0ff" }}></i>
-      </header>
-
-      <div id="sidebar" style={{
-        position: "fixed", top: "-100%", left: 0, width: "100%", height: 320, background: "rgba(0,0,0,0.95)",
-        padding: 20, boxShadow: "0 3px 15px #000", transition: "top 0.5s ease", zIndex: 1001, display: "flex", flexDirection: "column", justifyContent: "space-between"
-      }}>
-        <div>
-          <div style={{ textAlign: "center", marginBottom: 20 }}>
-            <input id="searchInput" placeholder="Search page..." style={{ width: "70%", padding: 8, borderRadius: 6, outline: "none", fontSize: 14 }} />
-            <button onClick={searchPage} style={{ padding: "8px 10px", borderRadius: 6, background: "gold", cursor: "pointer", fontWeight: "bold", marginLeft: 8 }}>Search</button>
-          </div>
-
-          <div className="links">
-            <a href="https://alzaeem1.gt.tc/index">🏠 Home</a><br />
-            <a href="https://alzaeem1.gt.tc/rule%20unive">🏛 University of Computers</a><br />
-            <a href="https://alzaeem1.gt.tc/rule%20stud">🎓 Student values</a><br />
-            <a href="https://alzaeem1.gt.tc/rule%20doct">👨‍🏫 Teacher values</a><br />
-            <a href="https://alzaeem1.gt.tc/student">🧠 Student page</a><br />
-            <a href="https://alzaeem1.gt.tc/Main">📝 Registration</a><br />
-            <a href="https://alzaeem1.gt.tc/file">🛡 Student files</a><br />
-            <a href="https://alzaeem1.gt.tc/search1_hub">🌐 Services</a><br />
-            <a href="https://alzaeem1.gt.tc/search_hub">💻 Software</a><br />
-            <a href="mailto:mohamedyhyamostafa@gmail.com">📧 Contact</a>
-          </div>
+      <div className="calc">
+        <div className="screen" id="screen">
+          <div className="small" id="history">&nbsp;</div>
+          <div id="display">0</div>
         </div>
-        <div style={{ textAlign: "center", fontSize: 12, color: "#bbb" }}>
-          ⚔️ © 2025 Alza3im Tech ⚔️<br />All Rights Reserved
+
+        <div className="keys" id="keys">
+          <button data-action="clear" className="op">C</button>
+          <button data-action="back">⌫</button>
+          <button data-action="percent">%</button>
+          <button data-action="divide" className="op">÷</button>
+
+          <button>7</button><button>8</button><button>9</button><button data-action="multiply" className="op">×</button>
+          <button>4</button><button>5</button><button>6</button><button data-action="minus" className="op">−</button>
+          <button>1</button><button>2</button><button>3</button><button data-action="plus" className="op">+</button>
+          <button className="keywide" data-action="plusminus">±</button>
+          <button>0</button>
+          <button data-action="dot">.</button>
+          <button data-action="equals" className="op">=</button>
         </div>
+
+        <footer>Alzaeem Tech • Accessible from any device via URL</footer>
       </div>
 
-      <div style={{ margin: 40, textAlign: "center" }}>
-        <div style={{ fontSize: 28, fontWeight: "bold", color: "gold" }}>✨ Power • Intelligence • Future ✨</div>
-        <div style={{ marginTop: 15, fontSize: 22, fontWeight: "bold" }}>⚔️ Where AI Meets Warriors of Technology ⚔️</div>
-        <div style={{ marginTop: 20 }}>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyKVX7d7hDJYenWDygmHG-h239wLLUlIPmFWwlSiF4mA&s=10"
-            alt="Wild Horse Logo"
-            style={{ width: 280, borderRadius: 20, boxShadow: "0 0 30px gold", maxWidth: "90%" }}
-          />
-          <p>The Untamed Stallion of Sharqia 🐎</p>
-        </div>
-      </div>
-
-      <button
-        onClick={playWelcome}
-        style={{
-          position: "fixed", bottom: 25, right: 25, padding: "12px 18px",
-          background: "cyan", color: "black", fontWeight: "bold",
-          border: "none", borderRadius: 10, cursor: "pointer",
-          zIndex: 1003, boxShadow: "0 0 15px cyan"
-        }}
-      >
-        🔊 Play Welcome Voice
-      </button>
+      <script dangerouslySetInnerHTML={{__html:`
+        (function(){
+          const display = document.getElementById('display');
+          const history = document.getElementById('history');
+          const keys = document.getElementById('keys');
+          let current = '0', previous = null, operator = null, overwrite = false;
+          function update(){ display.textContent=current; history.textContent=previous?previous+' '+(operator||''):''; }
+          function inputDigit(d){ if(overwrite||current==='0'){current=d;overwrite=false;}else{current+=d;} }
+          function inputDot(){ if(overwrite){current='0.';overwrite=false;return;} if(!current.includes('.')) current+='.'; }
+          function clearAll(){current='0';previous=null;operator=null;overwrite=false;}
+          function backspace(){ if(overwrite||current.length===1){current='0';overwrite=false;return;} current=current.slice(0,-1);}
+          function toggleSign(){ if(current==='0') return; current=(parseFloat(current)*-1).toString();}
+          function percent(){ current=(parseFloat(current)/100).toString(); overwrite=true;}
+          function applyOperator(op){ const curr=parseFloat(current); if(previous===null){previous=curr;} else if(operator){previous=compute(previous,curr,operator);} operator=op; overwrite=true; current=previous.toString();}
+          function compute(a,b,op){ if(op==='+')return a+b;if(op==='-')return a-b;if(op==='*')return a*b;if(op==='/')return b===0?NaN:a/b;return b;}
+          function equals(){ if(operator===null||previous===null)return; const result=compute(previous,parseFloat(current),operator); current=(isFinite(result)?result:'Error').toString(); previous=null; operator=null; overwrite=true;}
+          keys.addEventListener('click',e=>{const t=e.target;if(t.tagName!=='BUTTON') return; const val=t.textContent; const action=t.dataset.action; switch(action){case'clear':clearAll();break;case'back':backspace();break;case'dot':inputDot();break;case'plus':applyOperator('+');break;case'minus':applyOperator('-');break;case'multiply':applyOperator('*');break;case'divide':applyOperator('/');break;case'equals':equals();break;case'plusminus':toggleSign();break;case'percent':percent();break;default: if(/^\d$/.test(val)) inputDigit(val);} update();});
+          window.addEventListener('keydown',e=>{ if(e.key>='0'&&e.key<='9')inputDigit(e.key); if(e.key==='.')inputDot(); if(e.key==='Backspace')backspace(); if(e.key==='Enter'||e.key==='=')equals(); if(e.key==='+')applyOperator('+'); if(e.key==='-')applyOperator('-'); if(e.key==='*')applyOperator('*'); if(e.key==='/')applyOperator('/'); if(e.key==='%')percent(); update();});
+          update();
+        })();
+      `}} />
     </div>
-  );
+  )
 }
