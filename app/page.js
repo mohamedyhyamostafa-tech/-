@@ -53,7 +53,7 @@ export default function Page() {
             <a href="https://alzaeem1.gt.tc/index"><i className="fa-solid fa-house"></i> Home</a>
             <a href="https://alzaeem1.gt.tc/rule%20unive"><i className="fa-solid fa-circle-info"></i> University of Computers and Information</a>
             <a href="https://alzaeem1.gt.tc/rule%20stud"><i className="fa-solid fa-gear"></i> Student values</a>
-            <a href="https://alzaeem1.gt.tc/rule%20doct"><i className="fa-solid fa-briefcase"></i> Teacher values</a>
+            <a href="https://kop-eta.vercel.app/"><i className="fa-solid fa-briefcase"></i> snake_game</a>
             <a href="https://alzaeem1.gt.tc/student"><i className="fa-solid fa-brain"></i> Student page</a>
             <a href="https://alzaeem1.gt.tc/Main"><i className="fa-solid fa-code"></i> Registration page</a>
             <a href="https://alzaeem1.gt.tc/file"><i className="fa-solid fa-shield-halved"></i> Student files</a>
