@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة عرض الكتب</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+        }
+
+        .btn {
+            background: #ff6f61;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ff3b2e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        /* تأثير غطاء ضبابي متحرك */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?fit=crop&w=1350&q=80') no-repeat center center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>منصة عرض الكتب بالذكاء الاصطناعي</h1>
+        <p>
+            استكشف مكتبتنا الرقمية حيث التكنولوجيا والذكاء الاصطناعي يلتقيان بالكتب. تصفح، تعلم، واستمتع بتجربة قراءة مبتكرة وغنية بالمعلومات.
+        </p>
+        <a href="https://pcam.wuaze.com/?i=1#" class="btn" target="_blank">اذهب إلى المنصة</a>
+    </div>
+</body>
+</html>
